@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -6,13 +7,13 @@ import java.util.Scanner;
 public class Exercicio5 {
 
     // public static int[] recursividade(int vet[], int c){
-    //     for(int i = c -2; i < vet.length; i++){//Começa do 0
-    //         for (int j = 0; j < c - 1; j++) {
-    //             System.out.println(vet[j]);
-    //         }
-    //         System.out.println(vet[i]);
-    //     }
-    //     return vet2[];
+    // for(int i = c -2; i < vet.length; i++){//Começa do 0
+    // for (int j = 0; j < c - 1; j++) {
+    // System.out.println(vet[j]);
+    // }
+    // System.out.println(vet[i]);
+    // }
+    // return vet2[];
     // }
     public static void main(String[] args) {
         int n, c;
@@ -22,30 +23,51 @@ public class Exercicio5 {
         // n = scan.nextInt();
         // int[] vet = new int[n];
         // for (int i = 0; i < n; i++) {
-        //     vet[i] = rand.nextInt(n - 0) + 1;
+        // vet[i] = rand.nextInt(n - 0) + 1;
         // }
-        int[] vet = {42, 9, 71, 66, 43};
+        int[] vet = { 42, 9, 71, 66, 43 };
         n = vet.length;
         c = 3;
-        Queue<Integer> fila = new LinkedList<>();
+
+        // Adiciona o vetor na fila
+        //Queue<Integer> fila = new LinkedList<>();
+        ArrayList<Integer> fila = new ArrayList<>();
+
         for (int i = 0; i < vet.length; i++) {
             fila.add(vet[i]);
+            // System.out.println(vet [i]);
         }
-        while(fila.size() != c){
+
+        while (vet.length != c) {
+            for (int i = c - 1; i < fila.size(); i++) {// Começa do 0
+                for (int j = 0; j < c - 1; j++) {
+                    System.out.print(fila.get(j) + ",");
+                }
+                System.out.println(fila.get(i));
+                System.out.println("PULO");
+            }
+            fila.remove(1);
+        }
+
+        // while (fila.size() != c) {
+        // ArrayList<Integer> lista = new ArrayList<>(fila);
+
+        // for (int i = c - 1; i < lista.size(); i++) {// Começa do 0
+        // for (int j = 0; j < c - 1; j++) {
+        // System.out.print(lista.get(j) + ",");
+        // }
+        // System.out.println(lista.get(i));
+        // System.out.println("PULO");
+        // }
+        // fila.remove();
+        // System.out.println("Teste");
+        // }
+
+        // Mostrar o último
         LinkedList<Integer> lista = new LinkedList<>(fila);
-         for(int i = c -1; i < lista.size(); i++){//Começa do 0
-            for (int j = 0; j < c - 1; j++) {
-                System.out.print(lista.get(j) + ",");
-            }
-            System.out.println(lista.get(i));
-            System.out.println("PULO");
+        for (int j = 0; j < c; j++) {
+            System.out.print(lista.get(j) + " ");
         }
-        fila.remove();
-    }
-            LinkedList<Integer> lista = new LinkedList<>(fila);
-            for (int j = 0; j < c; j++) {
-                System.out.print(lista.get(j) + " ");
-            }
 
     }
 }
