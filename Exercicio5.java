@@ -30,25 +30,34 @@ public class Exercicio5 {
         c = 3;
 
         // Adiciona o vetor na fila
-        //Queue<Integer> fila = new LinkedList<>();
-        ArrayList<Integer> fila = new ArrayList<>();
+        LinkedList<Integer> fila = new LinkedList<>();
+        ArrayList<Integer> numeros = new ArrayList<>();
 
         for (int i = 0; i < vet.length; i++) {
             fila.add(vet[i]);
-            // System.out.println(vet [i]);
         }
 
-        while (vet.length != c) {
-            for (int i = c - 1; i < fila.size(); i++) {// Começa do 0
-                for (int j = 0; j < c - 1; j++) {
-                    System.out.print(fila.get(j) + ",");
-                }
-                System.out.println(fila.get(i));
-                System.out.println("PULO");
+        while (fila.size() != c) {
+            for (int i = 0; i < fila.size(); i++) {
+                numeros.add(fila.get(i));
+                //System.out.println(fila.get(i));
             }
-            fila.remove(1);
-        }
 
+            // Não mexer
+            while (numeros.size() != c) {
+                for (int i = c - 1; i < numeros.size(); i++) {// Começa do 0
+                    for (int j = 0; j < c - 1; j++) {
+                        System.out.print(numeros.get(j) + ",");
+                    }
+                    System.out.println(numeros.get(i));
+                    System.out.println("PULO");
+                }
+                numeros.remove(1);
+                // Até aqui
+            }
+            numeros.clear();
+            fila.poll();
+        }
         // while (fila.size() != c) {
         // ArrayList<Integer> lista = new ArrayList<>(fila);
 
@@ -64,7 +73,7 @@ public class Exercicio5 {
         // }
 
         // Mostrar o último
-        LinkedList<Integer> lista = new LinkedList<>(fila);
+        LinkedList<Integer> lista = new LinkedList<>(numeros);
         for (int j = 0; j < c; j++) {
             System.out.print(lista.get(j) + " ");
         }
