@@ -2,6 +2,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Exercicio3 {
+
+    /*
+    Crie um método chamado Insere_Exclusivo(int vet[], int N) que alimenta um vetor 
+    de N elementos com valores aleatórios entre 1 e N sem que ocorram números repetidos. Exiba o vetor gerado.
+     */
     public static void main(String[] args) {
           int n;
         Scanner scan = new Scanner(System.in);
