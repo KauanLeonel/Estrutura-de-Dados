@@ -9,11 +9,10 @@ public class Exercicio1 {
         Em um segundo momento, exiba o vetor na ordem em que os elementos 
         foram digitados e em ordem inversa.
         */
-        int n, temp;
+        int n;
         Scanner scan = new Scanner(System.in);
         System.out.println("Digite o valor de N: ");
         n = scan.nextInt();
-        int numOfLoops = (int)n/2;
         int[] vet = new int[n];
         System.out.println("Digite os números: ");
         for (int i = 0; i < n; i++) {
@@ -31,16 +30,24 @@ public class Exercicio1 {
         // }
 
         //Invertendo o vetor
-        int numInverso = vet.length -1;
-        for (int i = 0; i < n/2; i++) {
+
+       vet = Ineversos(vet);
+        for (int i = 0; i < n; i++) {
+            System.out.println(vet[i]);
+        }
+        scan.close();
+    }
+
+    public static int[] Ineversos(int[] vet){
+    int temp;
+    int numInverso = vet.length -1;
+        for (int i = 0; i < vet.length/2; i++) {
             // System.out.println("Vetor na ordem inversa de digitação");
             temp = vet[i];
             vet[i] = vet[numInverso];
             vet[numInverso] = temp;
             numInverso--;
         }
-        for (int i = 0; i < n; i++) {
-            System.out.println(vet[i]);
-        }
+        return vet;
     }
 }
