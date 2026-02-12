@@ -5,15 +5,19 @@ import java.util.Scanner;
 
 public class Exercicio5 {
 
-    // public static int[] recursividade(int vet[], int c){
-    // for(int i = c -2; i < vet.length; i++){//Começa do 0
-    // for (int j = 0; j < c - 1; j++) {
-    // System.out.println(vet[j]);
-    // }
-    // System.out.println(vet[i]);
-    // }
-    // return vet2[];
-    // }
+    public static void recursividade(int vet[], int[] combi, int t, int i, int r){
+        if(i == r){
+            for (int j = 0; j < combi.length; j++) {
+                System.out.print(combi[j]);
+            }
+            System.out.println(" ");
+        }
+
+        for (int j = 0; j < combi.length; j++) {
+            combi[j] = vet[i];
+            recursividade(vet, combi, t, i + 1, r + 1);
+        }
+    }
     public static void main(String[] args) {
         int n, c;
         Random rand = new Random();
@@ -27,65 +31,8 @@ public class Exercicio5 {
         int[] vet = { 42, 9, 71, 66, 43 };
         n = vet.length;
         c = 4;
-
-        //Caso seja um
-        if (c == 1) {
-            for (int i = 0; i < vet.length; i++) {
-                System.out.println(vet[i]);
-            }
-        } else {
-            // Adiciona o vetor na fila
-            LinkedList<Integer> fila = new LinkedList<>();
-            ArrayList<Integer> numeros = new ArrayList<>();
-
-            for (int i = 0; i < vet.length; i++) {
-                fila.add(vet[i]);
-            }
-
-            while (fila.size() != c - 1) {
-                for (int i = 0; i < fila.size(); i++) {
-                    numeros.add(fila.get(i));
-                    // System.out.println(fila.get(i));
-                }
-
-                // Não mexer
-                while (numeros.size() != c) {
-                    for (int i = c - 1; i < numeros.size(); i++) {// Começa do 0
-                        for (int j = 0; j < c - 1; j++) {
-                            System.out.print(numeros.get(j) + ",");
-                        }
-                        System.out.println(numeros.get(i));
-                        // System.out.println("PULO");
-                    }
-                    numeros.remove(1);
-                    // Até aqui
-                }
-                for (int j = 0; j < c; j++) {
-                    System.out.print(numeros.get(j) + " ");
-                }
-                System.out.println("");
-
-                numeros.clear();
-                fila.poll();
-            }
-        }
-        // while (fila.size() != c) {
-        // ArrayList<Integer> lista = new ArrayList<>(fila);
-
-        // for (int i = c - 1; i < lista.size(); i++) {// Começa do 0
-        // for (int j = 0; j < c - 1; j++) {
-        // System.out.print(lista.get(j) + ",");
-        // }
-        // System.out.println(lista.get(i));
-        // System.out.println("PULO");
-        // }
-        // fila.remove();
-        // System.out.println("Teste");
-        // }
-        // Mostrar o último
-        // for (int j = 0; j < c; j++) {
-        // System.out.print(fila.get(j) + " ");
-        // }
+        int[] combi = new int[4];
+       recursividade(vet, combi, c, 0, 0);
     }
 }
 
