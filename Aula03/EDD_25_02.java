@@ -4,7 +4,7 @@ public class EDD_25_02 {
 
     public static void main(String[] args) {
 
-        int N = 20;
+        int N = 10000;
 
         int vetAleatorio_1[] = new int[N];
         int vetMelhorCaso_1[] = new int[N];
@@ -71,7 +71,7 @@ public class EDD_25_02 {
         tempoS = (fim - inicio) / 1000;
         tempoMS = (fim - inicio) - tempoS * 1000;
         System.out.println("Tempo de ordenacao(melhorado) Pior Caso: " + tempoS + "s" + tempoMS + "ms");
-                exibirVetor(vetPiorCaso_2, N);
+        // exibirVetor(vetPiorCaso_2, N);
     }
 
     static void inicializarVetor(int vet[], int N, int s) {
@@ -123,17 +123,22 @@ public class EDD_25_02 {
 
     private static void ordenarMelhorado(int[] vet, int N) {
         for (int i = 0; i < N; i++) {
-            
-            for (int j = 0; j < N - i - 1; j++) {
-                
-                if (vet[j] > vet[j + 1]) {
-                   
-                    troca(vet, j, j + 1);
+            boolean comp = true;
+            for (int k = 0; k < N - i - 1; k++) {
+                if (vet[k] > vet[k + 1]) {
+                    comp = false;
                 }
-            
-            }
-             
-        }
-    }
+            if(comp == true) break;
+               
+                    for (int j = 0; j < N - i - 1; j++) {
+                        if (vet[j] > vet[j + 1]) {
+                            troca(vet, j, j + 1);
+                        }
 
-}
+                    }
+                }
+            }
+        }
+
+    }
+    
