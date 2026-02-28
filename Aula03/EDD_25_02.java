@@ -123,22 +123,18 @@ public class EDD_25_02 {
 
     private static void ordenarMelhorado(int[] vet, int N) {
         for (int i = 0; i < N; i++) {
-            boolean comp = true;
-            for (int k = 0; k < N - i - 1; k++) {
-                if (vet[k] > vet[k + 1]) {
-                    comp = false;
-                }
-            if(comp == true) break;
-               
+            boolean comp = true;     
                     for (int j = 0; j < N - i - 1; j++) {
                         if (vet[j] > vet[j + 1]) {
+                            comp = false;
                             troca(vet, j, j + 1);
                         }
 
                     }
+                  if (comp) break;
                 }
             }
         }
 
-    }
+    
     
