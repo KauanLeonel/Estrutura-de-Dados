@@ -64,12 +64,12 @@ public class LinkedList {
                 inicio = novoNo;
             } else if (inicio.proximo == null) {
                 inicio.proximo = novoNo;
-                if(inicio.value > inicio.proximo.value){
+                if (inicio.value > inicio.proximo.value) {
                     int temp = inicio.value;
                     inicio.value = inicio.proximo.value;
                     inicio.proximo.value = temp;
-                }  
-            } else{
+                }
+            } else {
                 no temp = inicio;
                 no temp2 = temp;
                 //System.out.println(temp.value);
@@ -77,8 +77,13 @@ public class LinkedList {
                     temp2 = temp;
                     temp = temp.proximo;
                 }
-                novoNo.proximo = temp;
-                temp2.proximo = novoNo;
+                if (temp == inicio) {
+                    novoNo.proximo = inicio;
+                    inicio = novoNo;
+                } else {
+                    novoNo.proximo = temp;
+                    temp2.proximo = novoNo;
+                }
             }
         }
 
@@ -135,6 +140,8 @@ public class LinkedList {
         inicio.insert(6);
         inicio.show();
         inicio.insert(5);
+        inicio.show();
+        inicio.insert(1);
         inicio.show();
 
         inicio.deleteLast();
