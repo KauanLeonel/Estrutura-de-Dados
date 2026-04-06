@@ -1,28 +1,97 @@
-Algoritmo,Tipo de Entrada,Tempo (us)
-Bubble Sort (basico),Aleatorio,159516
-Bubble Sort (basico),Melhor Caso,30547
-Bubble Sort (basico),Pior Caso,47451
-Bubble Sort (melhorado),Aleatorio,122996
-Bubble Sort (melhorado),Melhor Caso,6
-Bubble Sort (melhorado),Pior Caso,31165
-Insertion Sort,Aleatorio,36979
-Insertion Sort,Melhor Caso,296
-Insertion Sort,Pior Caso,79344
-Maior/Menor (duplo),Aleatorio,35128
-Maior/Menor (duplo),Melhor Caso,26497
-Maior/Menor (duplo),Pior Caso,31011
-Selection Sort,Aleatorio,31647
-Selection Sort,Melhor Caso,34224
-Selection Sort,Pior Caso,36001
-Merge Sort,Aleatorio,2192
-Merge Sort,Melhor Caso,1607
-Merge Sort,Pior Caso,1510
-Heap Sort,Aleatorio,3542
-Heap Sort,Melhor Caso,2124
-Heap Sort,Pior Caso,878
-Quick Sort,Aleatorio,1514
-Quick Sort,Melhor Caso,723
-Quick Sort,Pior Caso,1749
-Counting Sort,Aleatorio,1601
-Counting Sort,Melhor Caso,1287
-Counting Sort,Pior Caso,280
+N,Algoritmo,Tipo de Entrada,Tempo (us)
+5000,Bubble Sort (basico),Aleatorio,16466
+5000,Bubble Sort (basico),Melhor Caso,4794
+5000,Bubble Sort (basico),Pior Caso,9024
+5000,Bubble Sort (melhorado),Aleatorio,13411
+5000,Bubble Sort (melhorado),Melhor Caso,2
+5000,Bubble Sort (melhorado),Pior Caso,6315
+5000,Insertion Sort,Aleatorio,8714
+5000,Insertion Sort,Melhor Caso,273
+5000,Insertion Sort,Pior Caso,14079
+5000,Selection Sort,Aleatorio,8289
+5000,Selection Sort,Melhor Caso,5460
+5000,Selection Sort,Pior Caso,6385
+5000,Merge Sort,Aleatorio,691
+5000,Merge Sort,Melhor Caso,453
+5000,Merge Sort,Pior Caso,470
+5000,Heap Sort,Aleatorio,2079
+5000,Heap Sort,Melhor Caso,406
+5000,Heap Sort,Pior Caso,427
+5000,Quick Sort,Aleatorio,519
+5000,Quick Sort,Melhor Caso,202
+5000,Quick Sort,Pior Caso,361
+5000,Counting Sort,Aleatorio,339
+5000,Counting Sort,Melhor Caso,258
+5000,Counting Sort,Pior Caso,262
+10000,Bubble Sort (basico),Aleatorio,79559
+10000,Bubble Sort (basico),Melhor Caso,20431
+10000,Bubble Sort (basico),Pior Caso,36163
+10000,Bubble Sort (melhorado),Aleatorio,66871
+10000,Bubble Sort (melhorado),Melhor Caso,5
+10000,Bubble Sort (melhorado),Pior Caso,24906
+10000,Insertion Sort,Aleatorio,7215
+10000,Insertion Sort,Melhor Caso,11
+10000,Insertion Sort,Pior Caso,13871
+10000,Selection Sort,Aleatorio,22926
+10000,Selection Sort,Melhor Caso,22298
+10000,Selection Sort,Pior Caso,24085
+10000,Merge Sort,Aleatorio,5725
+10000,Merge Sort,Melhor Caso,7606
+10000,Merge Sort,Pior Caso,4506
+10000,Heap Sort,Aleatorio,1145
+10000,Heap Sort,Melhor Caso,594
+10000,Heap Sort,Pior Caso,583
+10000,Quick Sort,Aleatorio,578
+10000,Quick Sort,Melhor Caso,110
+10000,Quick Sort,Pior Caso,201
+10000,Counting Sort,Aleatorio,701
+10000,Counting Sort,Melhor Caso,116
+10000,Counting Sort,Pior Caso,185
+30000,Bubble Sort (basico),Aleatorio,907198
+30000,Bubble Sort (basico),Melhor Caso,178129
+30000,Bubble Sort (basico),Pior Caso,305987
+30000,Bubble Sort (melhorado),Aleatorio,769818
+30000,Bubble Sort (melhorado),Melhor Caso,13
+30000,Bubble Sort (melhorado),Pior Caso,224401
+30000,Insertion Sort,Aleatorio,63327
+30000,Insertion Sort,Melhor Caso,35
+30000,Insertion Sort,Pior Caso,122990
+30000,Selection Sort,Aleatorio,196204
+30000,Selection Sort,Melhor Caso,199118
+30000,Selection Sort,Pior Caso,216489
+30000,Merge Sort,Aleatorio,2807
+30000,Merge Sort,Melhor Caso,1563
+30000,Merge Sort,Pior Caso,1518
+30000,Heap Sort,Aleatorio,2295
+30000,Heap Sort,Melhor Caso,1314
+30000,Heap Sort,Pior Caso,1709
+30000,Quick Sort,Aleatorio,1861
+30000,Quick Sort,Melhor Caso,359
+30000,Quick Sort,Pior Caso,678
+30000,Counting Sort,Aleatorio,527
+30000,Counting Sort,Melhor Caso,245
+30000,Counting Sort,Pior Caso,219
+50000,Bubble Sort (basico),Aleatorio,2581102
+50000,Bubble Sort (basico),Melhor Caso,471206
+50000,Bubble Sort (basico),Pior Caso,813989
+50000,Bubble Sort (melhorado),Aleatorio,2271915
+50000,Bubble Sort (melhorado),Melhor Caso,21
+50000,Bubble Sort (melhorado),Pior Caso,619120
+50000,Insertion Sort,Aleatorio,172097
+50000,Insertion Sort,Melhor Caso,60
+50000,Insertion Sort,Pior Caso,355371
+50000,Selection Sort,Aleatorio,529515
+50000,Selection Sort,Melhor Caso,533230
+50000,Selection Sort,Pior Caso,588562
+50000,Merge Sort,Aleatorio,7478
+50000,Merge Sort,Melhor Caso,1703
+50000,Merge Sort,Pior Caso,1431
+50000,Heap Sort,Aleatorio,3833
+50000,Heap Sort,Melhor Caso,2497
+50000,Heap Sort,Pior Caso,2466
+50000,Quick Sort,Aleatorio,3206
+50000,Quick Sort,Melhor Caso,734
+50000,Quick Sort,Pior Caso,1193
+50000,Counting Sort,Aleatorio,538
+50000,Counting Sort,Melhor Caso,228
+50000,Counting Sort,Pior Caso,171
