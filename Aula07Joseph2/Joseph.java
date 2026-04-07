@@ -12,13 +12,12 @@ public class Joseph {
         do {
             for (int i = 1; i <= N; i++) {
                 insereFinal(i);
-                josephus(S);
-
             }
+            josephus(S);
             System.out.println(inicio.valor);
             if (inicio.valor != meu) {
                 S++;
-                //System.out.println("AQUI?" + S);
+                inicio = null;
             } else {
                 break;
             }
