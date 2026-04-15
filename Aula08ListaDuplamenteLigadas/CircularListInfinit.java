@@ -4,7 +4,8 @@ public class CircularListInfinit {
     private No inicio; // inicio é o nó de controle da lista o "início" da implementação anterior
 
     public CircularListInfinit() {
-        this.inicio = null;    }
+        this.inicio = null;
+    }
 
     public void insereFinal(int x) {
         No newNo = new No(x);
@@ -12,10 +13,12 @@ public class CircularListInfinit {
         if (inicio == null) {
             inicio = newNo;
             inicio.prox = inicio;
+            inicio.ant = inicio;
         } else {
-            newNo.ant = fim;
-            fim.prox = newNo;
-            fim = newNo;
+            newNo.ant = inicio.ant;
+            inicio.ant.prox = newNo;
+            newNo.prox = inicio;
+            inicio.ant = newNo;
         }
     }
 
@@ -24,9 +27,12 @@ public class CircularListInfinit {
 
         if (inicio == null) {
             inicio = newNo;
-            fim = newNo;
+            inicio.prox = inicio;
+            inicio.ant = inicio;
         } else {
             newNo.prox = inicio;
+            newNo.ant = inicio.ant;
+            inicio.ant.prox = newNo;
             inicio.ant = newNo;
             inicio = newNo;
 
@@ -41,9 +47,9 @@ public class CircularListInfinit {
             if (inicio.prox == null) {
                 inicio = null;
             } else {
-                inicio.prox.ant = null;
+                inicio.ant.prox = inicio.prox;
+                inicio.prox.ant = inicio.ant;
                 inicio = inicio.prox;
-
             }
         }
     }
@@ -56,17 +62,17 @@ public class CircularListInfinit {
             if (inicio.prox == null) {
                 inicio = null;
             } else {
-                fim.ant.prox = null;
-                fim = fim.ant;
+                inicio.ant.ant.prox = inicio;
+                inicio.ant = inicio.ant.ant;
             }
         }
     }
 
     public void ultimo() {
-        if (fim == null) {
+        if (inicio == null) {
             System.out.println("Vazio chapa");
         } else {
-            System.out.println("Primeiro " + fim.valor);
+            System.out.println("Ultimo " + inicio.ant.valor);
         }
     }
 
@@ -92,7 +98,7 @@ public class CircularListInfinit {
         }
         int length = 1;
         No temp = inicio;
-        while (temp.prox != null) {
+        while (temp.prox != inicio) {
             temp = temp.prox;
 
             length++;

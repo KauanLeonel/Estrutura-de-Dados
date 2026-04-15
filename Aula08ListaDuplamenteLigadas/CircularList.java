@@ -6,7 +6,7 @@ public class CircularList {
 
     public CircularList() {
         this.inicio = null;
-        this.inicio = null;
+        this.fim = null;
     }
 
     public void insereFinal(int x) {
@@ -69,7 +69,7 @@ public class CircularList {
         if (fim == null) {
             System.out.println("Vazio chapa");
         } else {
-            System.out.println("Primeiro " + fim.valor);
+            System.out.println("Último " + fim.valor);
         }
     }
 
@@ -106,15 +106,16 @@ public class CircularList {
 
     public void exibir() {
         if (inicio == null) {
-            System.out.println("Empty queue");
-        } else {
-            No temp = inicio;
-            System.out.println("SHOWING THE STACK");
-            while (temp.prox != inicio) {
-                System.out.println(temp.valor);
-                temp = temp.prox;
-            }
-            System.out.println(temp.valor);
+            System.out.println("Lista Vazia");
+            return;
+        }
+        No temp = inicio;
+        while (temp != null) {
+            String antVal = (temp.ant != null) ? String.valueOf(temp.ant.valor) : "null";
+            String proxVal = (temp.prox != null) ? String.valueOf(temp.prox.valor) : "null";
+
+            System.out.println("Valor: " + temp.valor + " | Ant: " + antVal + " | Prox: " + proxVal);
+            temp = temp.prox;
         }
     }
 
