@@ -5,8 +5,8 @@ public class Joseph {
 
     public static void main(String[] args) {
 
-        int N = 700;
-        int S = 1572;
+        int N = 6;
+        int S = 3;
 
         for (int i = 1; i <= N; i++) {
             insereFinal(i);
