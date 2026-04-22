@@ -61,12 +61,19 @@ public class Joseph {
     static void josephus(int s, int j) {
 
         while (inicio.prox != inicio) {
+
             for (int i = 0; i < s - 1; i++) {
                 inicio = inicio.prox;
             }
+
             inicio.prox.ant = inicio.ant;
             inicio.ant.prox = inicio.prox;
             inicio = inicio.prox;
+
+            if(inicio.prox == inicio){
+                break;
+            }
+
             for (int i = 0; i < j - 1; i++) {
                 inicio = inicio.ant;
             }
