@@ -44,7 +44,7 @@ public class Primos {
         if (temp.prox == null) {
             return 0;
         } else {
-            return tamanho(temp.prox);
+            return 1 + tamanho(temp.prox);
         }
 
     }
