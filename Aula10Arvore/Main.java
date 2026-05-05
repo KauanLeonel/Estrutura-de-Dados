@@ -17,5 +17,11 @@ public class Main {
         tree.Insert(27);
         System.out.println("EXIBIR");
         System.out.println(tree.tamanho());
+        System.out.println("Menor");
+        tree.menor();
+        tree.maior();
+        System.out.println("Tamanho " +    tree.tamanho());
+     
+
     }
 }

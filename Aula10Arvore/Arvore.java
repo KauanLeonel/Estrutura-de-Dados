@@ -35,7 +35,7 @@ public class Arvore {
         int i = 0;
         if (temp != null) {
             if (temp.valor <= temp.esq.valor)
-            return exibirNext(temp.esq);
+                return exibirNext(temp.esq);
             System.out.println(temp.valor);
             exibirNext(temp.dir);
         }
@@ -46,17 +46,21 @@ public class Arvore {
         exibirNext(raiz);
     }
 
-     public void menorNext(NoA temp) {
-        if (temp != null) {
-            if(temp.dir)
-            menorNext(temp.esq);
-            System.out.println(temp.valor);
-            menorNext(temp.dir);
-        }
-    }
+
 
     public void menor() {
-        exibirNext(raiz);
+        NoA temp = raiz;
+        while(temp.esq != null){
+            temp = temp.esq;
+        }
+        System.out.println(temp.valor);
+    }
+    public void maior() {
+        NoA temp = raiz;
+        while(temp.dir != null){
+            temp = temp.dir;
+        }
+        System.out.println(temp.valor);
     }
 
     public void folhasNext(NoA temp) {
@@ -73,13 +77,13 @@ public class Arvore {
         folhasNext(raiz);
     }
 
-      public int tamanhoNext(NoA temp) {
+    public int tamanhoNext(NoA temp) {
         int i = 1;
         if (temp != null) {
             i = i + tamanhoNext(temp.esq);
-            i = i + tamanhoNext(temp.dir);  
+            i = i + tamanhoNext(temp.dir);
             return i;
-        } else{
+        } else {
             return 0;
         }
     }
@@ -87,7 +91,6 @@ public class Arvore {
     public int tamanho() {
         return tamanhoNext(raiz);
     }
-    
 
     public void Show() {
 
