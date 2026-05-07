@@ -104,6 +104,7 @@ public class Arvore {
 
             }
         }
+
     }
 
     public void insertExclusive(int x) {
@@ -177,7 +178,7 @@ public class Arvore {
     public void removeTwoChildren(int x) {
         NoA noAnt = foundNoa(x);
 
-        NoA temp = raiz;
+        NoA temp = noAnt.dir;
         while (temp.esq.esq != null) {
             temp = temp.esq;
         }
