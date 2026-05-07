@@ -15,13 +15,19 @@ public class Main {
         tree.Insert(29);
 
         tree.Insert(27);
+        tree.insertExclusive(27);
+        tree.insertExclusive(28);
+
         System.out.println("EXIBIR");
-        System.out.println(tree.tamanho());
+        tree.exibir();
         System.out.println("Menor");
         tree.menor();
         tree.maior();
         System.out.println("Tamanho " +    tree.tamanho());
-     
+        
+
+        //tree.found(37);
+        System.out.println(tree.countChildren(9));
 
     }
 }
