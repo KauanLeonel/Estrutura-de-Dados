@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Arvore {
 
@@ -32,18 +33,72 @@ public class Arvore {
         }
     }
 
-    public void fixoNext(NoA temp, String fixa) {
+    public void fixoNext(NoA temp, String fixa, ArrayList remover) {
         if (temp != null) {
-            fixoNext(temp.esq, fixa);
+            fixoNext(temp.esq, fixa, remover);
             if (!temp.valor.matches(fixa)) {
-                remove(temp.valor);
+                remover.add(temp.valor);
             }
-            fixoNext(temp.dir, fixa);
+            fixoNext(temp.dir, fixa, remover);
         }
     }
 
     public void fixo(String fixa) {
-        fixoNext(raiz, fixa);
+        ArrayList<String> remover = new ArrayList<>();
+        fixoNext(raiz, fixa, remover);
+        while (!remover.isEmpty()) {
+            remove(remover.get(0));
+            remover.remove(0);
+        }
+
+    }
+
+    public void temNext(NoA temp, String fixa, ArrayList remover) {
+        if (temp != null) {
+            temNext(temp.esq, fixa, remover);
+            for (int i = 0; i < fixa.length(); i++) {
+                if (temp.valor.indexOf(fixa.charAt(i)) == -1) {
+                    remover.add(temp.valor);
+                    break;
+                }
+            }
+            temNext(temp.dir, fixa, remover);
+        }
+
+    }
+
+    public void tem(String fixa) {
+        ArrayList<String> remover = new ArrayList<>();
+        temNext(raiz, fixa, remover);
+        while (!remover.isEmpty()) {
+            remove(remover.get(0));
+            remover.remove(0);
+        }
+
+    }
+
+    public void nTemNext(NoA temp, String fixa, ArrayList remover) {
+        if (temp != null) {
+            nTemNext(temp.esq, fixa, remover);
+            for (int i = 0; i < fixa.length(); i++) {
+                if (temp.valor.indexOf(fixa.charAt(i)) != -1) {
+                    remover.add(temp.valor);
+                    break;
+                }
+            }
+            nTemNext(temp.dir, fixa, remover);
+        }
+
+    }
+
+    public void nTem(String fixa) {
+        ArrayList<String> remover = new ArrayList<>();
+        nTemNext(raiz, fixa, remover);
+        while (!remover.isEmpty()) {
+            remove(remover.get(0));
+            remover.remove(0);
+        }
+
     }
 
     public void exibirNext(NoA temp) {
@@ -111,7 +166,7 @@ public class Arvore {
                 break;
             } else {
                 int comparar = temp.valor.compareTo(i);
-                if (comparar < 0) {
+                if (comparar > 0) {
                     temp = temp.esq;
                 } else {
                     temp = temp.dir;
@@ -169,7 +224,8 @@ public class Arvore {
     public NoA foundNoaAnt(String i) {
         NoA temp = raiz;
         while (temp != null) {
-            if (temp.dir.valor.equals(i) &&  temp.dir != null || temp.esq.valor.equals(i) && temp.esq != null ) {
+            if ((temp.dir != null && temp.dir.valor.equals(i)) ||
+                    (temp.esq != null && temp.esq.valor.equals(i))) {
                 break;
             } else {
                 int comparar = temp.valor.compareTo(i);
@@ -185,42 +241,61 @@ public class Arvore {
     }
 
     public int countChildren(String x) {
-        if (!foundBoolean(x)) {
+        NoA temp = foundNoa(x);
+
+        if (temp == null) {
             return -1;
         }
-        NoA temp = foundNoa(x);
-        return tamanhoNext(temp) - 1;
 
+        int filhos = 0;
+
+        if (temp.esq != null) {
+            filhos++;
+        }
+
+        if (temp.dir != null) {
+            filhos++;
+        }
+
+        return filhos;
     }
 
-   public void removeTwoChildren(String x) {
+    public void removeTwoChildren(String x) {
+        NoA no = foundNoa(x);
 
-    NoA no = foundNoa(x);
+        if (no == null) {
+            return;
+        }
 
-    // menor da direita
-    NoA paiMenor = no;
-    NoA menor = no.dir;
+        if (no.esq == null || no.dir == null) {
+            return;
+        }
 
-    while (menor.esq != null) {
-        paiMenor = menor;
-        menor = menor.esq;
+        NoA paiMenor = no;
+        NoA menor = no.dir;
+
+        while (menor.esq != null) {
+            paiMenor = menor;
+            menor = menor.esq;
+        }
+
+        no.valor = menor.valor;
+
+        if (paiMenor.esq == menor) {
+            paiMenor.esq = menor.dir;
+        } else {
+            paiMenor.dir = menor.dir;
+        }
     }
-
-    // copia valor
-    no.valor = menor.valor;
-
-    // remove o menor
-    if (paiMenor.esq == menor) {
-        paiMenor.esq = menor.dir;
-    } else {
-        paiMenor.dir = menor.dir;
-    }
-}
 
     public void removeOneChildren(String x) {
         NoA noAnt = foundNoaAnt(x);
 
-        if (noAnt.dir.valor.equals(x)) {
+        if (noAnt == null) {
+            return;
+        }
+
+        if (noAnt.dir != null && noAnt.dir.valor.equals(x)) {
             if (noAnt.dir.dir == null) {
                 noAnt.dir = noAnt.dir.esq;
             } else {
@@ -240,27 +315,28 @@ public class Arvore {
 
     public void removeLeaf(String x) {
         NoA noAnt = foundNoaAnt(x);
-        if (noAnt.dir.valor.equals(x) && noAnt.dir != null) {
+        if (noAnt.dir != null && noAnt.dir.valor.equals(x)) {
             noAnt.dir = null;
-        } else {
+        } else if (noAnt.esq != null && noAnt.esq.valor.equals(x)) {
             noAnt.esq = null;
         }
 
     }
 
     public void remove(String x) {
+        if (raiz == null) {
+            return;
+        }
+
         if (raiz.valor.equals(x)) {
             if (raiz.esq == null && raiz.dir == null) {
                 raiz = null;
+            } else if (raiz.esq == null) {
+                raiz = raiz.dir;
+            } else if (raiz.dir == null) {
+                raiz = raiz.esq;
             } else {
-                if (raiz.esq == null && raiz.dir != null) {
-                    raiz = raiz.dir;
-                }
-                if (raiz.esq != null && raiz.dir == null) {
-                    raiz = raiz.esq;
-                } else {
-                    removeTwoChildren(x);
-                }
+                removeTwoChildren(x);
             }
         } else {
             int f = countChildren(x);
@@ -280,32 +356,5 @@ public class Arvore {
 
             }
         }
-
-        // public void Show() {
-        //     Arvore exibir = this;
-        //     while (exibir.raiz != null) {
-        //         NoA temp = raiz;
-        //         while (true) {
-        //             while (temp.esq != null) {
-        //                 if (temp.esq.dir == null && temp.esq.esq == null) {
-        //                     System.out.println(temp.valor);
-        //                     temp.esq = null;
-        //                     break;
-        //                 } else {
-        //                     temp = temp.esq;
-        //                 }
-        //             }
-        //             while (temp.dir != null) {
-        //                 if (temp.dir.dir == null && temp.dir.esq == null) {
-        //                     System.out.println(temp.valor);
-        //                     temp.dir = null;
-        //                     break;
-        //                 } else {
-        //                     temp = temp.dir;
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
     }
 }
