@@ -3,6 +3,7 @@ public class Arvore {
 
     NoA raiz = null;
 
+    //#region Inserção
     public void Insert(int x) {
         NoA novo = new NoA(x);
 
@@ -31,6 +32,18 @@ public class Arvore {
         }
     }
 
+    public void insertExclusive(int x) {
+        if (!foundBoolean(x)) {
+            Insert(x);
+        }
+    }
+
+    //#endregion
+    //#region Exibição
+    public void exibir() {
+        exibirNext(raiz);
+    }
+
     public void exibirNext(NoA temp) {
         if (temp != null) {
             exibirNext(temp.esq);
@@ -40,10 +53,48 @@ public class Arvore {
         }
     }
 
-    public void exibir() {
-        exibirNext(raiz);
+    public void folhas() {
+        folhasNext(raiz);
     }
 
+    public void folhasNext(NoA temp) {
+        if (temp != null) {
+            folhasNext(temp.esq);
+            if ((temp.esq == null) && (temp.dir == null)) {
+                System.out.print("[" + temp.valor + "]");
+            }
+            folhasNext(temp.dir);
+        }
+    }
+
+    static void exibeArvore(NoA n, int x) {
+
+        if (n.dir != null) {
+            exibeArvore(n.dir, x + 1);
+        } else {
+            System.out.println();
+        }
+
+        for (int i = 1; i <= x; i++) {
+            System.out.print("|  ");
+        }
+
+        if ((n.esq == null) && (n.dir == null)) {
+            System.out.print("[" + n.valor + "]");
+        } else {
+            System.out.print(n.valor);
+        }
+
+        if (n.esq != null) {
+            exibeArvore(n.esq, x + 1);
+        } else {
+            System.out.println();
+        }
+
+    }
+    //#endregion
+
+    //#region Busca
     public void menor() {
         NoA temp = raiz;
         while (temp.esq != null) {
@@ -60,18 +111,8 @@ public class Arvore {
         System.out.println(temp.valor);
     }
 
-    public void folhasNext(NoA temp) {
-        if (temp != null) {
-            folhasNext(temp.esq);
-            if ((temp.esq == null) && (temp.dir == null)) {
-                System.out.print("[" + temp.valor + "]");
-            }
-            folhasNext(temp.dir);
-        }
-    }
-
-    public void folhas() {
-        folhasNext(raiz);
+    public int tamanho() {
+        return tamanhoNext(raiz);
     }
 
     public int tamanhoNext(NoA temp) {
@@ -83,10 +124,6 @@ public class Arvore {
         } else {
             return 0;
         }
-    }
-
-    public int tamanho() {
-        return tamanhoNext(raiz);
     }
 
     public void found(int i) {
@@ -105,12 +142,6 @@ public class Arvore {
             }
         }
 
-    }
-
-    public void insertExclusive(int x) {
-        if (!foundBoolean(x)) {
-            Insert(x);
-        }
     }
 
     public boolean foundBoolean(int i) {
@@ -175,6 +206,29 @@ public class Arvore {
 
     }
 
+    public boolean ehFolha(NoA temp) {
+        if ((temp.esq == null) && (temp.dir == null)) {
+            return true;
+        }
+        return false;
+    }
+
+    public int profundidade(NoA temp) {
+        if (temp != null) {
+            if (ehFolha(temp)) {
+                return 0;
+            } else {
+                int x = profundidade(temp.esq);
+                int y = profundidade(temp.dir);
+                int r = (x > y) ? x : y;
+                return r + 1;
+            }
+        }
+        return -1;
+    }
+    //#endregion
+
+    //#region Remoção
     public void removeTwoChildren(int x) {
         NoA no = foundNoa(x);
 
@@ -198,7 +252,7 @@ public class Arvore {
     public void removeOneChildren(int x) {
         NoA noAnt = foundNoaAnt(x);
 
-        if (noAnt.dir.valor == x) {
+        if (noAnt.dir != null && noAnt.dir.valor == x) {
             if (noAnt.dir.dir == null) {
                 noAnt.dir = noAnt.dir.esq;
             } else {
@@ -224,27 +278,6 @@ public class Arvore {
             noAnt.esq = null;
         }
 
-    }
-
-    public boolean ehFolha(NoA temp) {
-        if ((temp.esq == null) && (temp.dir == null)) {
-            return true;
-        }
-        return false;
-    }
-
-    public int profundidade(NoA temp) {
-        if (temp != null) {
-            if (ehFolha(temp)) {
-                return 0;
-            } else {
-                int x = profundidade(temp.esq);
-                int y = profundidade(temp.dir);
-                int r = (x > y) ? x : y;
-                return r + 1;
-            }
-        }
-        return -1;
     }
 
     public void remove(int x) {
@@ -280,104 +313,82 @@ public class Arvore {
         }
 
     }
+    //#endregion
 
-    static void exibeArvore(NoA n, int x) {
+    //#region giro
+    public NoA girarDireita(NoA x) {
+        NoA y = x.esq; //Seja Y o filho à esquerda de X
+        x.esq = y.dir; // Torne o filho à direita de Y o filho à esquerda de X.
+        y.dir = x; // Torne X o filho à direita de Y
+        return y;
+    }
 
-        if (n.dir != null) {
-            exibeArvore(n.dir, x + 1);
-        } else {
-            System.out.println();
+    public NoA girarEsquerda(NoA x) {
+        NoA y = x.dir; //Seja Y o filho à direita de X
+        x.dir = y.esq; // Torne o filho à esquerda de Y o filho à direita de X.
+        y.esq = x; // Torne X o filho à esquerda de Y
+        return y;
+    }
+    //#endregion
+
+    //#region balanceamento
+    public NoA balancearNo(NoA n) {
+        if (n == null) {
+            return null;
+        }
+        int fb = fatorBalanceamento(n);
+
+        if (fb > 1) {
+            if (fatorBalanceamento(n.dir) < 0) {
+                n.dir = girarDireita(n.dir);
+            }
+
+            return girarEsquerda(n);
         }
 
-        for (int i = 1; i <= x; i++) {
-            System.out.print("|  ");
+        if (fb < -1) {
+            if (fatorBalanceamento(n.esq) > 0) {
+                n.esq = girarEsquerda(n.esq);
+            }
+
+            return girarDireita(n);
         }
 
-        if ((n.esq == null) && (n.dir == null)) {
-            System.out.print("[" + n.valor + "]");
-        } else {
-            System.out.print(n.valor);
-        }
-
-        if (n.esq != null) {
-            exibeArvore(n.esq, x + 1);
-        } else {
-            System.out.println();
-        }
-
+        return n;
     }
 
     public int fatorBalanceamento(NoA n) {
-        int fb = (profundidade(n.dir) - profundidade(n.esq));
-        return fb;
+        if (n == null) {
+            return 0;
+        }
+
+        return (profundidade(n.dir) - profundidade(n.esq));
+
     }
 
     public void mostrarFB(NoA temp) {
         if (temp != null) {
             mostrarFB(temp.esq);
-            System.out.println(temp.valor + " -> FB = " + (profundidade(temp.dir) - profundidade(temp.esq)));
+            System.out.println(temp.valor + " -> FB = " + fatorBalanceamento(temp));
 
             mostrarFB(temp.dir);
         }
     }
 
-    public boolean verificarAVL(NoA temp, boolean eh) {
-        if (eh != false) {
-
-            if (temp != null) {
-
-                int fb = (profundidade(temp.dir) - profundidade(temp.esq));
-                if (fb != 0 && fb != 1 && fb != -1) {
-
-                    eh = false;
-                }
-
-                verificarAVL(temp.esq, eh);
-                verificarAVL(temp.dir, eh);
-            }
+    public boolean ehAVL(NoA temp) {
+        if (temp == null) {
+            return true;
         }
-        return eh;
-    }
 
-    public boolean ehAVL(NoA n) {
-        if (raiz == null) {
+        int fb = fatorBalanceamento(temp);
+
+        if (fb < -1 || fb > 1) {
             return false;
         }
-        boolean eh = true;
-        eh = verificarAVL(n, eh);
-        return eh;
+
+        return ehAVL(temp.esq) && ehAVL(temp.dir);
     }
 
-    private NoA girarDireita(NoA x) {
-        NoA y = x.esq;
-        NoA aux = y.dir;
-
-        y.dir = x;
-        x.esq = aux;
-
-        return y;
-    }
-
-    private NoA girarEsquerda(NoA x) {
-        NoA y = x.dir;
-        NoA aux = y.esq;
-
-        y.esq = x;
-        x.dir = aux;
-
-        return y;
-    }
-
-    // public void duplaGirarDireita(int x) {
-    //     NoA temp = foundNoa(x);
-    //     girarEsquerda(temp.dir.valor);
-    //     girarDireita(x);
-    // }
-    // public void duplaGirarEsquerda(int x) {
-    //     NoA temp = foundNoa(x);
-    //     girarDireita(temp.esq.valor);
-    //     girarEsquerda(x);
-    // }
     public void rodar(NoA valor, int direcao) {
         if (direcao == -1) {
             girarEsquerda(valor);
@@ -404,6 +415,7 @@ public class Arvore {
             limpeza(temp.esq);
             limpeza(temp.dir);
             System.out.println(" Fator de Balanceamento " + temp.valor + " : " + fatorBalanceamento(temp) + " EhAvl " + ehAVL(raiz));
+
             if (fatorBalanceamento(temp.dir) == 2) {
                 //girarEsquerda(temp.valor);
                 temp.dir = girarEsquerda(temp.dir);
@@ -416,4 +428,6 @@ public class Arvore {
 
         }
     }
+    //#endregion
+
 }
