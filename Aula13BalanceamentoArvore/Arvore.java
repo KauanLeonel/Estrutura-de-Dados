@@ -67,7 +67,7 @@ public class Arvore {
         }
     }
 
-    static void exibeArvore(NoA n, int x) {
+    public void exibeArvore(NoA n, int x) {
 
         if (n.dir != null) {
             exibeArvore(n.dir, x + 1);
@@ -247,7 +247,7 @@ public class Arvore {
         } else {
             paiSucessor.dir = sucessor.dir;
         }
-    }
+      }
 
     public void removeOneChildren(int x) {
         NoA noAnt = foundNoaAnt(x);
@@ -404,30 +404,27 @@ public class Arvore {
             System.out.println("ÁRVORE VAZIA");
         } else {
             while (!ehAVL(raiz)) {
-                limpeza(raiz);
+                raiz = limpeza(raiz);
             }
         }
     }
 
-    public void limpeza(NoA temp) {
-
-        if (temp != null) {
-            limpeza(temp.esq);
-            limpeza(temp.dir);
-            System.out.println(" Fator de Balanceamento " + temp.valor + " : " + fatorBalanceamento(temp) + " EhAvl " + ehAVL(raiz));
-
-            if (fatorBalanceamento(temp.dir) == 2) {
-                //girarEsquerda(temp.valor);
-                temp.dir = girarEsquerda(temp.dir);
-
-            } else {
-                if (fatorBalanceamento(temp) == -2) {
-                    girarDireita(temp);
-                }
-            }
-
-        }
+   public NoA limpeza(NoA temp) {
+    if (temp == null) {
+        return null;
     }
+
+    temp.esq = limpeza(temp.esq);
+    temp.dir = limpeza(temp.dir);
+
+    System.out.println(
+        " Fator de Balanceamento " + temp.valor +
+        " : " + fatorBalanceamento(temp) +
+        " EhAvl " + ehAVL(raiz)
+    );
+
+    return balancearNo(temp);
+}
     //#endregion
 
 }

@@ -50,9 +50,9 @@ System.out.println("NOVA");
 // test.dir = a.girarDireita(test.dir);
 
 //a.rodar(50, 1);
-
+a.balancear();
 //System.out.println(a.ehAVL(a.raiz)); // true
 a.exibeArvore(a.raiz, 0);
-a.balancear();
+
     }
 }
