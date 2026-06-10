@@ -1,7 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  throws FileNotFoundException  {
         // Arvore tree = new Arvore();
         // tree.Insert(11);
         // tree.Insert(8);
@@ -31,17 +34,14 @@ public class Main {
         // System.out.println("É balanceada: " + tree.ehAVL(tree.raiz));
 Arvore a = new Arvore();
 
-a.Insert(1);
-a.Insert(2);
-a.Insert(3);
-a.Insert(4);
-a.Insert(5);
-a.Insert(6);
-a.Insert(7);
-a.Insert(8);
-a.Insert(9);
-a.Insert(10);
+ Scanner leitor = new Scanner(new File("entrada.txt"));
 
+        while (leitor.hasNextInt()) {
+            int numero = leitor.nextInt();
+            a.insertExclusive(numero);
+        }
+
+        leitor.close();
 
 a.exibeArvore(a.raiz, 0);
 
@@ -50,9 +50,30 @@ System.out.println("NOVA");
 // test.dir = a.girarDireita(test.dir);
 
 //a.rodar(50, 1);
-a.balancear();
+//a.balancear();
 //System.out.println(a.ehAVL(a.raiz)); // true
 a.exibeArvore(a.raiz, 0);
+System.out.println("Tamanho: " + a.tamanho() + 
+"\nProfundidade: "     + a.profundidade(a.raiz)
+ + "\nProfundidade da árvore a direita da raiz: "  + a.profundidade(a.raiz.dir)
+ + "\nProfundidade da árvore a esquerda da raiz: "  + a.profundidade(a.raiz.esq));
+    
+ a.raiz = a.girarEsquerda(a.raiz);
+ a.raiz = a.girarEsquerda(a.raiz);
 
-    }
+System.out.println("\nProfundidade da árvore a direita da raiz: "  + a.profundidade(a.raiz.dir)
+ + "\nProfundidade da árvore a esquerda da raiz: "  + a.profundidade(a.raiz.esq));
+    
+a.RemoverMultiplo(3);
+a.RemoverMultiplo(5);
+a.RemoverMultiplo(7);
+
+System.out.println("Tamanho: " + a.tamanho() + 
+"\nProfundidade: "     + a.profundidade(a.raiz)
+ + "\nProfundidade da árvore a direita da raiz: "  + a.profundidade(a.raiz.dir)
+ + "\nProfundidade da árvore a esquerda da raiz: "  + a.profundidade(a.raiz.esq));
+    
+}
+
+    
 }

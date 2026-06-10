@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 
 public class Arvore {
 
     NoA raiz = null;
 
-    //#region Inserção
+    // #region Inserção
     public void Insert(int x) {
         NoA novo = new NoA(x);
 
@@ -38,8 +39,8 @@ public class Arvore {
         }
     }
 
-    //#endregion
-    //#region Exibição
+    // #endregion
+    // #region Exibição
     public void exibir() {
         exibirNext(raiz);
     }
@@ -92,9 +93,9 @@ public class Arvore {
         }
 
     }
-    //#endregion
+    // #endregion
 
-    //#region Busca
+    // #region Busca
     public void menor() {
         NoA temp = raiz;
         while (temp.esq != null) {
@@ -198,12 +199,23 @@ public class Arvore {
     }
 
     public int countChildren(int x) {
-        if (!foundBoolean(x)) {
+        NoA temp = foundNoa(x);
+
+        if (temp == null) {
             return -1;
         }
-        NoA temp = foundNoa(x);
-        return tamanhoNext(temp) - 1;
 
+        int qtd = 0;
+
+        if (temp.esq != null) {
+            qtd++;
+        }
+
+        if (temp.dir != null) {
+            qtd++;
+        }
+
+        return qtd;
     }
 
     public boolean ehFolha(NoA temp) {
@@ -226,9 +238,9 @@ public class Arvore {
         }
         return -1;
     }
-    //#endregion
+    // #endregion
 
-    //#region Remoção
+    // #region Remoção
     public void removeTwoChildren(int x) {
         NoA no = foundNoa(x);
 
@@ -247,7 +259,7 @@ public class Arvore {
         } else {
             paiSucessor.dir = sucessor.dir;
         }
-      }
+    }
 
     public void removeOneChildren(int x) {
         NoA noAnt = foundNoaAnt(x);
@@ -313,25 +325,25 @@ public class Arvore {
         }
 
     }
-    //#endregion
+    // #endregion
 
-    //#region giro
+    // #region giro
     public NoA girarDireita(NoA x) {
-        NoA y = x.esq; //Seja Y o filho à esquerda de X
+        NoA y = x.esq; // Seja Y o filho à esquerda de X
         x.esq = y.dir; // Torne o filho à direita de Y o filho à esquerda de X.
         y.dir = x; // Torne X o filho à direita de Y
         return y;
     }
 
     public NoA girarEsquerda(NoA x) {
-        NoA y = x.dir; //Seja Y o filho à direita de X
+        NoA y = x.dir; // Seja Y o filho à direita de X
         x.dir = y.esq; // Torne o filho à esquerda de Y o filho à direita de X.
         y.esq = x; // Torne X o filho à esquerda de Y
         return y;
     }
-    //#endregion
+    // #endregion
 
-    //#region balanceamento
+    // #region balanceamento
     public NoA balancearNo(NoA n) {
         if (n == null) {
             return null;
@@ -409,22 +421,42 @@ public class Arvore {
         }
     }
 
-   public NoA limpeza(NoA temp) {
-    if (temp == null) {
-        return null;
+    public NoA limpeza(NoA temp) {
+        if (temp == null) {
+            return null;
+        }
+
+        temp.esq = limpeza(temp.esq);
+        temp.dir = limpeza(temp.dir);
+
+        // System.out.println(
+        //         " Fator de Balanceamento " + temp.valor +
+        //                 " : " + fatorBalanceamento(temp) +
+        //                 " EhAvl " + ehAVL(raiz));
+
+        return balancearNo(temp);
+    }
+    // #endregion
+
+    public void RemoverMultiplo (int x){
+        ArrayList<Integer> eliminar = new ArrayList<>();
+     
+        acharRemover(raiz, eliminar, x);
+
+        for(int valor: eliminar){
+            remove(valor);
+        }
     }
 
-    temp.esq = limpeza(temp.esq);
-    temp.dir = limpeza(temp.dir);
+    public void acharRemover(NoA temp, ArrayList<Integer> remover, int x){
+        if (temp != null) {
+        acharRemover(temp.esq, remover, x);
 
-    System.out.println(
-        " Fator de Balanceamento " + temp.valor +
-        " : " + fatorBalanceamento(temp) +
-        " EhAvl " + ehAVL(raiz)
-    );
+        if (temp.valor % x == 0) {
+            remover.add(temp.valor);
+        }
 
-    return balancearNo(temp);
-}
-    //#endregion
-
+        acharRemover(temp.dir, remover, x);
+    }
+    }
 }
