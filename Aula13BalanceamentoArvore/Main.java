@@ -48,32 +48,18 @@ a.exibeArvore(a.raiz, 0);
 System.out.println("NOVA");
 // NoA test = a.foundNoaAnt(60);
 // test.dir = a.girarDireita(test.dir);
+NoA anterior = a.foundNoaAnt(7);
+anterior.dir = a.girarEsquerda(anterior.dir);
+// System.out.println(anterior.valor);
+//  a.raiz = a.girarEsquerda(a.raiz);
+//  a.raiz = a.girarEsquerda(a.raiz);
 
 //a.rodar(50, 1);
 //a.balancear();
 //System.out.println(a.ehAVL(a.raiz)); // true
 a.exibeArvore(a.raiz, 0);
-System.out.println("Tamanho: " + a.tamanho() + 
-"\nProfundidade: "     + a.profundidade(a.raiz)
- + "\nProfundidade da árvore a direita da raiz: "  + a.profundidade(a.raiz.dir)
- + "\nProfundidade da árvore a esquerda da raiz: "  + a.profundidade(a.raiz.esq));
-    
- a.raiz = a.girarEsquerda(a.raiz);
- a.raiz = a.girarEsquerda(a.raiz);
 
-System.out.println("\nProfundidade da árvore a direita da raiz: "  + a.profundidade(a.raiz.dir)
- + "\nProfundidade da árvore a esquerda da raiz: "  + a.profundidade(a.raiz.esq));
-    
-a.RemoverMultiplo(3);
-a.RemoverMultiplo(5);
-a.RemoverMultiplo(7);
 
-System.out.println("Tamanho: " + a.tamanho() + 
-"\nProfundidade: "     + a.profundidade(a.raiz)
- + "\nProfundidade da árvore a direita da raiz: "  + a.profundidade(a.raiz.dir)
- + "\nProfundidade da árvore a esquerda da raiz: "  + a.profundidade(a.raiz.esq));
-    
-}
 
-    
+    }
 }
