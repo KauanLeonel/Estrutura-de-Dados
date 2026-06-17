@@ -55,24 +55,20 @@ public class Arvore {
         }
     }
 
-    public void folhas() {
-        int num = 0;
-        num = folhasNext(raiz, num);
-        System.out.println("Folhas: " + num);
+    public int folhas() {
+        return folhasNext(raiz);
     }
 
-    public int folhasNext(NoA temp, int num) {
-        if (temp != null) {
-            num = folhasNext(temp.esq, num);
-            if ((temp.esq == null) && (temp.dir == null)) {
-               System.out.print("[" + temp.valor + "]" );
-                num++;
-            }
-            num = folhasNext(temp.dir, num);
-
-            
+    public int folhasNext(NoA temp) {
+        if (temp == null) {
+            return 0;
         }
-        return num;
+
+        if ((temp.esq == null) && (temp.dir == null)) {
+            return 1;
+        }
+
+        return folhasNext(temp.esq) + folhasNext(temp.dir);
     }
 
     public void exibeArvore(NoA n, int x) {
@@ -171,13 +167,13 @@ public class Arvore {
         return found;
     }
 
-    public NoA foundNoa(NoA i) {
+    public NoA foundNoa(int i) {
         NoA temp = raiz;
         while (temp != null) {
-            if (temp.valor == i.valor) {
+            if (temp.valor == i) {
                 break;
             } else {
-                if (temp.valor > i.valor) {
+                if (temp.valor > i) {
                     temp = temp.esq;
                 } else {
                     temp = temp.dir;
@@ -188,13 +184,13 @@ public class Arvore {
         return temp;
     }
 
-    public NoA foundNoaAnt(NoA i) {
+    public NoA foundNoaAnt(int i) {
         NoA temp = raiz;
         while (temp != null) {
-            if ((temp.dir != null && temp.dir.valor == i.valor) || (temp.esq != null && temp.esq.valor == i.valor)) {
+            if ((temp.dir != null && temp.dir.valor == i) || (temp.esq != null && temp.esq.valor == i)) {
                 break;
             } else {
-                if (temp.valor > i.valor) {
+                if (temp.valor > i) {
                     temp = temp.esq;
                 } else {
                     temp = temp.dir;
@@ -205,7 +201,8 @@ public class Arvore {
         return temp;
     }
 
-    public int countChildren(NoA temp) {
+    public int countChildren(int x) {
+        NoA temp = foundNoa(x);
 
         if (temp == null) {
             return -1;
@@ -247,89 +244,162 @@ public class Arvore {
     // #endregion
 
     // #region Remoção
-    public void removeTwoChildren(NoA x) {
-        NoA no = foundNoa(x);
-
-        NoA paiSucessor = no;
-        NoA sucessor = no.dir;
-
-        while (sucessor.esq != null) {
-            paiSucessor = sucessor;
-            sucessor = sucessor.esq;
+    public void remove(int x) {
+        if (raiz == null) {
+            return;
         }
 
-        no.valor = sucessor.valor;
-
-        if (paiSucessor.esq == sucessor) {
-            paiSucessor.esq = sucessor.dir;
-        } else {
-            paiSucessor.dir = sucessor.dir;
-        }
-    }
-
-    public void removeOneChildren(NoA x) {
-        NoA noAnt = foundNoaAnt(x);
-
-        if (noAnt.dir != null && noAnt.dir.valor == x.valor) {
-            if (noAnt.dir.dir == null) {
-                noAnt.dir = noAnt.dir.esq;
-            } else {
-                noAnt.dir = noAnt.dir.dir;
-            }
-
-        } else {
-
-            if (noAnt.esq.dir == null) {
-                noAnt.esq = noAnt.esq.esq;
-            } else {
-                noAnt.esq = noAnt.esq.dir;
-            }
-        }
-
-    }
-
-    public void removeLeaf(NoA x) {
-        NoA noAnt = foundNoaAnt(x);
-        if (noAnt.dir != null && noAnt.dir.valor == x.valor) {
-            noAnt.dir = null;
-        } else {
-            noAnt.esq = null;
-        }
-
-    }
-
-    public void remove(NoA x) {
-        if (raiz.valor == x.valor) {
+        
+        if (raiz.valor == x) {
             if (raiz.esq == null && raiz.dir == null) {
                 raiz = null;
+            } else if (raiz.esq != null && raiz.dir != null) {
+                removeTwoChildren(raiz, x);
+            } else if (raiz.esq == null) {
+                raiz = raiz.dir;
             } else {
-                if (raiz.esq == null && raiz.dir != null) {
-                    raiz = raiz.dir;
-                } else if (raiz.esq != null && raiz.dir == null) {
-                    raiz = raiz.esq;
-                } else {
-                    removeTwoChildren(x);
-                }
+                raiz = raiz.esq;
             }
         } else {
-            int f = countChildren(x);
-            switch (f) {
-                case -1:
-                    System.out.println("O nó não existe na árvore");
-                    break;
-                case 0:
-                    removeLeaf(x);
-                    break;
-                case 1:
-                    removeOneChildren(x);
-                    break;
-                default:
-                    removeTwoChildren(x);
-                    break;
+            removeNo(raiz, x);
+        }
+    }
 
+    public void removeNo(NoA n, int x) {
+        int f = countChildren(n, x);
+
+        switch (f) {
+            case -1:
+                System.out.println("O nó não existe na árvore");
+                break;
+            case 0:
+                removeLeaf(n, x);
+                break;
+            case 1:
+                removeOneChildren(n, x);
+                break;
+            case 2:
+                removeTwoChildren(n, x);
+                break;
+        }
+    }
+
+    public int countChildren(NoA n, int x) {
+        int qtd = 0;
+
+        if (n.valor == x) {
+            if (n.esq != null) {
+                qtd++;
+            }
+
+            if (n.dir != null) {
+                qtd++;
+            }
+        } else {
+            if (x < n.valor) {
+                if (n.esq != null) {
+                    qtd += countChildren(n.esq, x);
+                } else {
+                    return -1;
+                }
+            }
+
+            if (x > n.valor) {
+                if (n.dir != null) {
+                    qtd += countChildren(n.dir, x);
+                } else {
+                    return -1;
+                }
             }
         }
 
+        return qtd;
+    }
+
+    public void removeLeaf(NoA n, int x) {
+        if (n.esq != null) {
+            if (n.esq.valor == x) {
+                n.esq = null;
+            } else {
+                if (n.valor > x) {
+                    removeLeaf(n.esq, x);
+                }
+            }
+        }
+
+        if (n.dir != null) {
+            if (n.dir.valor == x) {
+                n.dir = null;
+            } else {
+                if (n.valor < x) {
+                    removeLeaf(n.dir, x);
+                }
+            }
+        }
+    }
+
+    public void removeOneChildren(NoA n, int x) {
+        boolean removeu = false;
+
+        if (n.esq != null) {
+            if (n.esq.valor == x) {
+                removeu = true;
+
+                if (n.esq.esq != null) {
+                    n.esq = n.esq.esq;
+                } else if (n.esq.dir != null) {
+                    n.esq = n.esq.dir;
+                }
+            }
+        }
+
+        if (n.dir != null) {
+            if (n.dir.valor == x) {
+                removeu = true;
+
+                if (n.dir.esq != null) {
+                    n.dir = n.dir.esq;
+                } else if (n.dir.dir != null) {
+                    n.dir = n.dir.dir;
+                }
+            }
+        }
+
+        if (!removeu) {
+            if (x < n.valor) {
+                removeOneChildren(n.esq, x);
+            } else {
+                removeOneChildren(n.dir, x);
+            }
+        }
+    }
+
+    public void removeTwoChildren(NoA n, int x) {
+        if (n.valor == x) {
+            NoA temp = noMaisAEsquerda(n.dir);
+            int novoValor = temp.valor;
+
+            // Ordem obrigatória:
+            // 1) remove o sucessor dentro da subárvore;
+            // 2) só depois troca o valor do nó atual.
+            // Se inverter essas duas linhas, pode ocorrer recursão infinita.
+            removeNo(n, novoValor);
+            n.valor = novoValor;
+        } else {
+            if (x < n.valor) {
+                removeTwoChildren(n.esq, x);
+            } else {
+                removeTwoChildren(n.dir, x);
+            }
+        }
+    }
+
+    public NoA noMaisAEsquerda(NoA n) {
+        if (n.esq != null) {
+            return noMaisAEsquerda(n.esq);
+        }
+
+        return n;
     }
     // #endregion
 
@@ -444,24 +514,25 @@ public class Arvore {
     // #endregion
 
     public void RemoverMultiplo(int x, int y, int z) {
-        ArrayList<NoA> eliminar = new ArrayList<>();
+        ArrayList<Integer> eliminar = new ArrayList<>();
 
         acharRemover(raiz, eliminar, x, y, z);
 
-        for (NoA no : eliminar) {
-            remove(no);
+        for (int valor : eliminar) {
+            remove(valor);
         }
     }
 
-    public void acharRemover(NoA temp, ArrayList<NoA> remover, int x, int y, int z) {
+    public void acharRemover(NoA temp, ArrayList<Integer> remover, int x, int y, int z) {
         if (temp != null) {
 
             
             acharRemover(temp.dir, remover, x, y, z);
-if (temp.valor % x == 0 || temp.valor % y == 0 || temp.valor % z == 0) {
-                remover.add(temp);
-                System.out.println(temp.valor);
+
+            if (temp.valor % x == 0 || temp.valor % y == 0 || temp.valor % z == 0) {
+                remover.add(temp.valor);
             }
+
             acharRemover(temp.esq, remover, x, y, z);
         }
     }

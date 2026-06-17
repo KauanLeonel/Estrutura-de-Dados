@@ -4,11 +4,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args)  throws FileNotFoundException  {
-        
-Arvore a = new Arvore();
+    public static void main(String[] args) throws FileNotFoundException {
+        Arvore a = new Arvore();
 
- Scanner leitor = new Scanner(new File("entrada.txt"));
+        Scanner leitor = new Scanner(new File("entrada.txt"));
 
         while (leitor.hasNextInt()) {
             int numero = leitor.nextInt();
@@ -17,27 +16,8 @@ Arvore a = new Arvore();
 
         leitor.close();
 
-System.out.println("Tamanho: " + a.tamanho() + 
-"\nProfundidade: "     + a.profundidade(a.raiz)
- + "\nProfundidade da árvore a direita da raiz: "  + a.profundidade(a.raiz.dir)
- + "\nProfundidade da árvore a esquerda da raiz: "  + a.profundidade(a.raiz.esq));
-    
-   
-a.RemoverMultiplo(3, 5, 7);
+        a.RemoverMultiplo(3, 5, 7);
 
-
-System.out.println("Tamanho: " + a.tamanho() + 
-"\nProfundidade: "     + a.profundidade(a.raiz)
- + "\nProfundidade da árvore a direita da raiz: "  + a.profundidade(a.raiz.dir)
- + "\nProfundidade da árvore a esquerda da raiz: "  + a.profundidade(a.raiz.esq));
-
- System.out.println("Folhas: ");
- a.folhas();
- //System.out.println("Folhas: " + a.folhasDaArvore);
-
- //a.exibeArvore(a.raiz, 0);
-}
-
-
-    
+        System.out.println(a.folhas());
+    }
 }
